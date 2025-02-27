@@ -10,8 +10,9 @@ function PizzaBlock({
   category,
   rating,
 }) {
-  const [activeSize, setActiveSize] = useState(0);
   const [activeType, setActiveType] = useState(0);
+  const [activeSize, setActiveSize] = useState(0);
+
   return (
     <div className="pizza-block">
       <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
@@ -22,6 +23,7 @@ function PizzaBlock({
             return type === 0 ? (
               <li
                 key={type}
+                onClick={() => setActiveType(types.indexOf(type))}
                 className={types.indexOf(type) === activeType ? "active" : ""}
               >
                 тонкое
@@ -29,6 +31,7 @@ function PizzaBlock({
             ) : (
               <li
                 key={type}
+                onClick={() => setActiveType(types.indexOf(type))}
                 className={types.indexOf(type) === activeType ? "active" : ""}
               >
                 традиционное
@@ -41,6 +44,7 @@ function PizzaBlock({
             return (
               <li
                 key={size}
+                onClick={() => setActiveSize(sizes.indexOf(size))}
                 className={sizes.indexOf(size) === activeSize ? "active" : ""}
               >{`${size} см`}</li>
             );
