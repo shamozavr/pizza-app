@@ -1,0 +1,32 @@
+@import "../variables";
+
+.search-wrapper {
+  width: 400px;
+  position: relative;
+
+  input {
+    position: relative;
+    width: 100%;
+    padding: 10px;
+    border: 2px solid $orange;
+    border-radius: 40px;
+  }
+
+  button {
+    color: black;
+    position: absolute;
+    border: none;
+    background: none;
+    right: 10px;
+    top: 50%;
+    transition: 0.2s;
+    transform: translateY(-50%);
+    cursor: pointer;
+    &:hover {
+      color: $orange;
+    }
+    &:active {
+      color: #e3e3e3;
+    }
+  }
+}

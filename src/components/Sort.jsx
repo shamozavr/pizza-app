@@ -1,17 +1,20 @@
 import { useState } from "react";
 
-function Sort() {
+function Sort({ sort, setSort }) {
   const sortTypes = ["популярности", "цене", "алфавиту"];
   const [isOpen, setIsOpen] = useState(false);
-  const [activeType, setActiveType] = useState(0);
-  const [isUp, setIsUp] = useState(true);
 
   return (
     <div className="sort">
       <div className="sort__label">
         <svg
-          onClick={() => setIsUp((prev) => !prev)}
-          className={isUp ? "sortSvg" : "sortSvg__sort-down"}
+          onClick={() =>
+            setSort({
+              ...sort,
+              order: !sort.order,
+            })
+          }
+          className={sort.order ? "sortSvg" : "sortSvg__sort-down"}
           width="10"
           height="6"
           viewBox="0 0 10 6"
@@ -29,7 +32,7 @@ function Sort() {
             setIsOpen(!isOpen);
           }}
         >
-          {sortTypes[activeType]}
+          {sortTypes[sort.type]}
         </span>
       </div>
       {isOpen && (
@@ -38,10 +41,13 @@ function Sort() {
             {sortTypes.map((type, ind) => (
               <li
                 onClick={() => {
-                  setActiveType(ind);
+                  setSort({
+                    ...sort,
+                    type: ind,
+                  });
                   setIsOpen(false);
                 }}
-                className={ind === activeType ? "active" : ""}
+                className={ind === sort.type ? "active" : ""}
                 key={ind}
               >
                 {type}

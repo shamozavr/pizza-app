@@ -1,6 +1,4 @@
-import { useState } from "react";
-
-function Categories() {
+function Categories({ active, setActive, setLoading }) {
   const categories = [
     "Все",
     "Мясные",
@@ -9,13 +7,16 @@ function Categories() {
     "Острые",
     "Закрытые",
   ];
-  const [active, setActive] = useState(0);
+
   return (
     <div className="categories">
       <ul>
         {categories.map((category, ind) => (
           <li
-            onClick={() => setActive(ind)}
+            onClick={() => {
+              setActive(ind);
+              setLoading(true);
+            }}
             key={ind}
             className={ind === active ? "active" : ""}
           >
