@@ -1,20 +1,29 @@
 import { useState } from "react";
 
-function Sort({ sort, setSort }) {
+import { useDispatch, useSelector } from "react-redux";
+import { setSort } from "../store/slices/filterSlice";
+
+function Sort() {
   const sortTypes = ["популярности", "цене", "алфавиту"];
   const [isOpen, setIsOpen] = useState(false);
+
+  // const { activeSort, setActiveSort } = useContext(AppContext);
+  const { type, isUp } = useSelector((state) => state.filter.sort);
+  const dispatch = useDispatch();
 
   return (
     <div className="sort">
       <div className="sort__label">
         <svg
           onClick={() =>
-            setSort({
-              ...sort,
-              order: !sort.order,
-            })
+            dispatch(
+              setSort({
+                type,
+                isUp: !isUp,
+              })
+            )
           }
-          className={sort.order ? "sortSvg" : "sortSvg__sort-down"}
+          className={isUp ? "sortSvg" : "sortSvg__sort-down"}
           width="10"
           height="6"
           viewBox="0 0 10 6"
@@ -32,7 +41,7 @@ function Sort({ sort, setSort }) {
             setIsOpen(!isOpen);
           }}
         >
-          {sortTypes[sort.type]}
+          {sortTypes[type]}
         </span>
       </div>
       {isOpen && (
@@ -40,14 +49,15 @@ function Sort({ sort, setSort }) {
           <ul>
             {sortTypes.map((type, ind) => (
               <li
-                onClick={() => {
-                  setSort({
-                    ...sort,
-                    type: ind,
-                  });
-                  setIsOpen(false);
-                }}
-                className={ind === sort.type ? "active" : ""}
+                onClick={() =>
+                  dispatch(
+                    setSort({
+                      type,
+                      isUp: !isUp,
+                    })
+                  )
+                }
+                className={ind === type ? "active" : ""}
                 key={ind}
               >
                 {type}

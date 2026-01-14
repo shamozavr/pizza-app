@@ -1,19 +1,28 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
+import { AppContext } from "./App";
 
 function Search() {
+  const { setLoading, setSearch } = useContext(AppContext);
   const inputRef = useRef(null);
+
+  function searchHandler() {
+    setLoading(true);
+    setSearch(inputRef.current.value);
+    inputRef.current.value = "";
+  }
 
   return (
     <div className="search-wrapper">
       <input
         ref={inputRef}
+        onKeyDown={(e) => e.keyCode === 13 && searchHandler()}
         placeholder="Поиск по названию"
         type="text"
         name="search"
         id="search"
         autoComplete="off"
       />
-      <button>
+      <button onClick={() => searchHandler()}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           height="24px"

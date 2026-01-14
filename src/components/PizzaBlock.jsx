@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "../store/slices/cartSlice";
 
 function PizzaBlock({
   id,
@@ -10,8 +12,13 @@ function PizzaBlock({
   category,
   rating,
 }) {
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(0);
+  const qty = cartItems[cartItems.findIndex((item) => item.id === id)]?.qty;
+  console.log(qty);
 
   return (
     <div className="pizza-block">
@@ -66,8 +73,8 @@ function PizzaBlock({
               fill="white"
             />
           </svg>
-          <span>Добавить</span>
-          <i>0</i>
+          <span onClick={() => dispatch(addItem(id))}>Добавить</span>
+          <i>{qty}</i>
         </div>
       </div>
     </div>
